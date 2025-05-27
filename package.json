@@ -1,0 +1,32 @@
+{
+  "name": "pocket-to-omnivore-importer",
+  "version": "1.0.0",
+  "description": "Import Pocket bookmarks to Omnivore using the official Node.js client",
+  "main": "import-pocket-to-omnivore.js",
+  "type": "module",
+  "scripts": {
+    "start": "node import-pocket-to-omnivore.js",
+    "import": "node import-pocket-to-omnivore.js"
+  },
+  "dependencies": {
+    "@omnivore-app/api": "^1.0.4",
+    "csv-parse": "^5.5.6",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "keywords": [
+    "omnivore",
+    "pocket",
+    "import",
+    "bookmarks",
+    "api"
+  ]
+}

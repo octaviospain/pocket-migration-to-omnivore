@@ -1,6 +1,15 @@
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/octaviospain/pocket-migration-to-omnivore/.github%2Fworkflows%2Fbuild.yml?logo=github)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=bugs)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=coverage)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+
 # Pocket to Omnivore Import Script
 
-This Node.js script imports your Pocket bookmarks to Omnivore using the official [@omnivore-app/api](https://github.com/omnivore-app/omnivore-api) client library.
+This Node.js script imports your Pocket bookmarks to Omnivore using the official
+[@omnivore-app/api](https://github.com/omnivore-app/omnivore-api) client
+library.
 
 ## Features
 
@@ -26,18 +35,20 @@ This Node.js script imports your Pocket bookmarks to Omnivore using the official
 1. **Clone or download** this script to your local machine
 
 2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+
+    ```bash
+    npm install
+    ```
 
 3. **Get your Omnivore API key**:
-   - Go to your Omnivore instance (e.g., https://omnivore.app)
-   - Navigate to Settings → API Keys
-   - Create a new API key and copy it
+
+    - Go to your Omnivore instance (e.g., https://omnivore.app)
+    - Navigate to Settings → API Keys
+    - Create a new API key and copy it
 
 4. **Export your Pocket data**:
-   - Go to [Pocket Export](https://getpocket.com/export)
-   - Download your bookmarks as a CSV file
+    - Go to [Pocket Export](https://getpocket.com/export)
+    - Download your bookmarks as a CSV file
 
 ## Configuration
 
@@ -84,7 +95,7 @@ node import-pocket-to-omnivore.js ~/Downloads/pocket-export.csv
 # Only archive articles that have tags (keeps untagged articles unread)
 node import-pocket-to-omnivore.js --unread_untagged ~/Downloads/pocket-export.csv
 
-# With inline API key and server URL for self-hosted Omnivore for self-hosted Omnivore with custom archiving
+# With inline API key and server URL for self-hosted Omnivore
 OMNIVORE_API_KEY="your-key" OMNIVORE_BASE_URL="https://omnivore.example.com" \
   node import-pocket-to-omnivore.js --unread_untagged pocket-export.csv
 
@@ -92,131 +103,180 @@ OMNIVORE_API_KEY="your-key" OMNIVORE_BASE_URL="https://omnivore.example.com" \
 node import-pocket-to-omnivore.js --help
 ```
 
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run integration test
+npm run test:integration
+```
+
+### Code Quality
+
+```bash
+# Lint code
+npm run lint
+
+# Fix linting issues automatically
+npm run lint:fix
+
+# Format code with Prettier
+npm run format
+
+# Check if code is properly formatted
+npm run format:check
+
+# Run all quality checks (lint + format + test)
+npm run precommit
+```
+
+### Development Scripts
+
+```bash
+# Start the import script with file watching
+npm run dev
+
+# Run specific import
+npm run import -- path/to/file.csv --unread_untagged
+```
+
 ## Archiving Behavior
 
 The script provides two archiving modes to suit different workflows:
 
 ### 🔸 **Default Mode** (Standard Behavior)
+
 ```bash
 node import-pocket-to-omnivore.js pocket-export.csv
 ```
+
 - **Archives** all articles marked as `status="archive"` in Pocket
 - **Keeps unread** all articles marked as `status="unread"` in Pocket
 - This preserves your exact Pocket organization
 
 ### 🔸 **Unread Untagged Mode** (Selective Archiving)
+
 ```bash
 node import-pocket-to-omnivore.js --unread_untagged pocket-export.csv
 ```
+
 - **Archives** only articles that have both:
-   - `status="archive"` in Pocket AND
-   - At least one tag assigned
-- **Keeps unread** all articles without tags, even if they were archived in Pocket
+    - `status="archive"` in Pocket AND
+    - At least one tag assigned
+- **Keeps unread** all articles without tags, even if they were archived in
+  Pocket
 - Useful if you want to review/re-tag untagged articles before archiving
 
 ## Expected CSV Format
 
-The script expects a CSV file with the following columns (standard Pocket export format):
+The script expects a CSV file with the following columns (standard Pocket export
+format):
 
 - `title` - Article title
 - `url` - Article URL (required)
 - `tags` - Pipe-separated tags (e.g., "tech|programming|nodejs")
 - `time_added` - Unix timestamp when article was saved
-- `status` - Article status ("archive" for archived articles, "unread" for unread)
+- `status` - Article status ("archive" for archived articles, "unread" for
+  unread)
 
-## Real-Time Progress Display
-
-The script shows a beautiful real-time progress bar:
+## Project Structure
 
 ```
-[PROGRESS] ████████████░░░░░░ 75% (150/200) Processing: How to Build Better APIs...
+pocket-to-omnivore-importer/
+├── src/                          # Source modules
+│   ├── logger.js                 # Logging and progress display
+│   ├── csv-parser.js             # CSV parsing and validation
+│   ├── tag-processor.js          # Tag processing utilities
+│   ├── importer.js               # Main import logic
+│   └── cli.js                    # Command line interface
+├── tests/                        # Test suite
+│   ├── *.test.js                 # Unit and integration tests
+├── import-pocket-to-omnivore.js  # Main entry point
+├── eslint.config.js              # ESLint configuration
+├── .prettierrc.json              # Prettier configuration
+└── package.json                  # Dependencies and scripts
 ```
 
-- **Dynamic updates** - single line that updates in place (no console spam)
-- **Shows current article** being processed
-- **Percentage and count** - clear progress indication
-- **Graceful fallback** - works in all terminal types
+## Code Quality Tools
+
+This project uses industry-standard tools for code quality:
+
+- **ESLint**: JavaScript linting with modern ES2022+ rules
+- **Prettier**: Code formatting with consistent style
+- **Node.js Test Runner**: Built-in testing framework (Node 18+)
+
+### ESLint Configuration
+
+- Modern flat config format
+- Import/export validation
+- Node.js specific rules
+- Prettier integration to avoid conflicts
+- Test-specific rules for test files
+
+### Prettier Configuration
+
+- Single quotes, semicolons
+- 100 character line length
+- 4-space indentation
+- Trailing commas avoided
+- Special formatting for JSON and Markdown
 
 ## Error Handling & Fail-Fast
 
-When an error occurs, the script **stops immediately** and shows detailed diagnostics:
+When an error occurs, the script **stops immediately** and shows detailed
+diagnostics:
 
 ```
 [ERROR] IMPORT STOPPED: Row 1247: GraphQL error: Invalid URL format
 [ERROR] Failed at row 1247:
-[ERROR]   Title: "Broken Article"  
+[ERROR]   Title: "Broken Article"
 [ERROR]   URL: "not-a-valid-url"
 [ERROR]   Tags: "tech|programming"
 [ERROR]   Status: "archive"
-[ERROR] 
+[ERROR]
 Progress before failure: 1246/1246 articles imported successfully
 ```
 
-This helps you:
-- **Identify problematic entries** quickly
-- **Fix CSV issues** before running the full import
-- **Resume from where you left off** after fixing problems
-
-## Final Statistics
-
-After successful completion, you'll see comprehensive statistics:
-
-```
-📊 Final Statistics:
-  ✅ Total articles processed: 1250/1250
-  🏷️  Articles with tags: 892
-  📦 Articles archived: 445
-  📖 Articles kept unread: 805
-  ⏭️  Archived→Unread (untagged): 67
-```
-
-The last line only appears when using `--unread_untagged` and shows how many articles were kept unread despite being archived in Pocket.
-
-## Script Behavior Details
-
-### Tag Processing
-- Tags are converted to Omnivore labels with the default orange color (`#EF8C43`)
-- Tags that look like timestamps (pure numbers) are ignored
-- Empty or whitespace-only tags are skipped
-- Tags are split by the pipe character (`|`)
-
-### Rate Limiting
-- 200ms delay between API requests to avoid rate limiting
-- Progress updates in real-time without flooding logs
-- Configurable delay via the `DELAY_BETWEEN_REQUESTS` constant
-
-### Logging Colors
-The script provides color-coded logging:
-- **🔵 INFO** - General information and progress
-- **🟢 SUCCESS** - Successful operations
-- **🟡 WARNING** - Non-fatal issues
-- **🔴 ERROR** - Errors and failures
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"OMNIVORE_API_KEY environment variable is required"**
-   - Make sure you've set the API key: `export OMNIVORE_API_KEY="your-key"`
-
-2. **"CSV file not found"**
-   - Check the file path is correct
-   - Ensure the file exists and is readable
-
-3. **GraphQL or Network errors**
-   - Check your internet connection
-   - Verify your API key is valid and not expired
-   - Ensure the base URL is correct for self-hosted instances
-
-4. **"Row X: Invalid URL format"**
-   - Some URLs in your CSV might be malformed
-   - Edit the CSV to fix the problematic URL
-   - The script will resume from where it left off
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues or pull requests.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run quality checks: `npm run precommit`
+5. Submit a pull request
+
+### Development Workflow
+
+```bash
+# Install dependencies
+npm install
+
+# Make your changes
+# ...
+
+# Check code quality
+npm run lint
+npm run format:check
+npm test
+
+# Fix any issues
+npm run lint:fix
+npm run format
+
+# Commit your changes
+git commit -m "Your descriptive commit message"
+```
 
 ## License
 
-MIT License - feel free to modify and distribute as needed.
+GPL-3.0 License

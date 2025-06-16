@@ -6,7 +6,17 @@
   "type": "module",
   "scripts": {
     "start": "node import-pocket-to-omnivore.js",
-    "import": "node import-pocket-to-omnivore.js"
+    "import": "node import-pocket-to-omnivore.js",
+    "test": "node --test tests/*.test.js",
+    "test:coverage": "c8 node --test tests/*.test.js",
+    "sonar": "sonar-scanner",
+    "analyze": "npm run test:coverage && npm run sonar",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "precommit": "npm run lint && npm run format:check && npm test",
+    "dev": "node --watch import-pocket-to-omnivore.js"
   },
   "dependencies": {
     "@omnivore-app/api": "^1.0.4",
@@ -15,18 +25,40 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "@types/uuid": "^10.0.0"
+    "@types/uuid": "^10.0.0",
+    "c8": "^8.0.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-sonarjs": "^3.0.2",
+    "prettier": "^3.2.5",
+    "sonarqube-scanner": "^4.3.0"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "author": "Your Name",
-  "license": "MIT",
+  "author": "Octavio Calleya Garcia",
+  "license": "GPLv3.0",
   "keywords": [
     "omnivore",
     "pocket",
     "import",
     "bookmarks",
-    "api"
-  ]
+    "api",
+    "cli"
+  ],
+  "files": [
+    "src/",
+    "import-pocket-to-omnivore.js",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octaviospain/pocket-to-omnivore-importer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/octaviospain/pocket-to-omnivore-importer/issues"
+  },
+  "homepage": "https://github.com/octaviospain/pocket-to-omnivore-importer#readme"
 }

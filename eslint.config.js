@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import nodePlugin from 'eslint-plugin-node';
 import prettierConfig from 'eslint-config-prettier';
+import sonarjs from 'eslint-plugin-sonarjs';
 
 export default [
     // Base configuration for all files
@@ -137,6 +138,8 @@ export default [
     {
         ignores: ['node_modules', 'dist/', 'build/', 'coverage/', 'logs/', 'tmp/', 'temp/']
     },
+
+    sonarjs.configs.recommended,
 
     // Apply Prettier config to disable conflicting rules
     prettierConfig

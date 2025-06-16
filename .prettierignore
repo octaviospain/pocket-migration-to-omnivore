@@ -17,17 +17,21 @@ coverage/
 tests/test-data/
 *.test-results.xml
 
+# SonarQube
+.sonar/
+.scannerwork/
+
 # OS generated files
-    .DS_Store
-    .DS_Store?
+.DS_Store
+.DS_Store?
 ._*
 .Spotlight-V100
-    .Trashes
+.Trashes
 ehthumbs.db
 Thumbs.db
 
 # IDE files
-    .vscode/
+.vscode/
 .idea/
 *.swp
 *.swo
@@ -44,11 +48,11 @@ pids/
 *.pid.lock
 
 # Environment files
-    .env
-    .env.local
-    .env.development
-    .env.test
-    .env.production
+.env
+.env.local
+.env.development
+.env.test
+.env.production
 
 # Temporary files
 tmp/

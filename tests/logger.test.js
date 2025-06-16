@@ -80,6 +80,7 @@ describe('Logger', () => {
         it('should create a full progress bar at 100%', () => {
             const progressBar = Logger.createProgressBar(100, 100, 10);
             // Should be all filled characters
+            // eslint-disable-next-line sonarjs/no-control-regex
             const cleanBar = progressBar.replace(new RegExp(String.raw`\u001b\[[0-9;]*m`, 'g'), ''); // Remove ANSI codes
             assert.strictEqual(cleanBar, '██████████');
         });
@@ -87,6 +88,7 @@ describe('Logger', () => {
         it('should create an empty progress bar at 0%', () => {
             const progressBar = Logger.createProgressBar(0, 100, 10);
             // Should be all empty characters
+            // eslint-disable-next-line sonarjs/no-control-regex
             const cleanBar = progressBar.replace(new RegExp(String.raw`\u001b\[[0-9;]*m`, 'g'), ''); // Remove ANSI codes
             assert.strictEqual(cleanBar, '░░░░░░░░░░');
         });

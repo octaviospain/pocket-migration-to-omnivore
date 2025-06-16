@@ -1,9 +1,9 @@
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/octaviospain/pocket-migration-to-omnivore/.github%2Fworkflows%2Fbuild.yml?logo=github)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=bugs)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=coverage)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=net.transgressoft%3Apocket-migration-to-omnivore&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=net.transgressoft%3Apocket-migration-to-omnivore)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/octaviospain/pocket-migration-to-omnivore/.github%2Fworkflows%2Fci.yml?logo=github)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=octaviospain_pocket-migration-to-omnivore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=octaviospain_pocket-migration-to-omnivore)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=octaviospain_pocket-migration-to-omnivore&metric=bugs)](https://sonarcloud.io/summary/new_code?id=octaviospain_pocket-migration-to-omnivore)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=octaviospain_pocket-migration-to-omnivore&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=octaviospain_pocket-migration-to-omnivore)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=octaviospain_pocket-migration-to-omnivore&metric=coverage)](https://sonarcloud.io/summary/new_code?id=octaviospain_pocket-migration-to-omnivore)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=octaviospain_pocket-migration-to-omnivore&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=octaviospain_pocket-migration-to-omnivore)
 
 # Pocket to Omnivore Import Script
 

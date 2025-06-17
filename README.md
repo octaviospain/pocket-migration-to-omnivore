@@ -14,6 +14,8 @@ library.
 ## Features
 
 - **Import articles** from Pocket CSV export to Omnivore
+- **URL validation** - automatically checks if links are still alive and skips
+  dead ones
 - **Preserve tags** as Omnivore labels with custom colors
 - **Archive articles** based on their Pocket status
 - **Flexible archiving options** - respect Pocket status or customize behavior
@@ -84,6 +86,8 @@ node import-pocket-to-omnivore.js [options] <csv_file_path>
 Options:
   --unread_untagged    Don't archive articles without tags, even if marked as archived in Pocket
   --help, -h           Show help message
+
+Note: The script automatically checks if URLs are still alive and skips dead links.
 ```
 
 ### Examples
@@ -150,6 +154,34 @@ npm run dev
 npm run import -- path/to/file.csv --unread_untagged
 ```
 
+## URL Validation
+
+The script **automatically validates all URLs** before importing them to
+Omnivore:
+
+### ✅ **What Gets Checked**
+
+- HTTP/HTTPS accessibility using HEAD requests
+- Response status codes (200-399 considered "alive")
+- Network connectivity and DNS resolution
+- Server timeouts (configurable, default 10 seconds)
+
+### 🔍 **URL Checking Process**
+
+1. For each article URL, a HEAD request is made
+2. URLs returning 2xx or 3xx status codes are considered alive
+3. Dead URLs (4xx, 5xx, network errors, timeouts) are automatically skipped
+4. Skipped URLs are logged with the reason (e.g., "HTTP 404", "ENOTFOUND",
+   "Timeout")
+5. Final statistics show how many URLs were skipped
+
+### 📊 **Benefits**
+
+- **Cleaner library**: Only working links are imported
+- **Faster imports**: No time wasted on dead links
+- **Better experience**: Avoid broken bookmarks in Omnivore
+- **Detailed reporting**: Know exactly which links failed and why
+
 ## Archiving Behavior
 
 The script provides two archiving modes to suit different workflows:
@@ -197,7 +229,7 @@ pocket-to-omnivore-importer/
 │   ├── logger.js                 # Logging and progress display
 │   ├── csv-parser.js             # CSV parsing and validation
 │   ├── tag-processor.js          # Tag processing utilities
-│   ├── importer.js               # Main import logic
+│   ├── importer.js               # Main import logic with URL checking
 │   └── cli.js                    # Command line interface
 ├── tests/                        # Test suite
 │   ├── *.test.js                 # Unit and integration tests
@@ -233,19 +265,44 @@ This project uses industry-standard tools for code quality:
 
 ## Error Handling & Fail-Fast
 
-When an error occurs, the script **stops immediately** and shows detailed
-diagnostics:
+The script distinguishes between different types of issues:
+
+### 🛑 **Fatal Errors** (Stop Import)
+
+- Invalid CSV format or structure
+- Malformed URLs (not fixable)
+- Missing required environment variables
+- File system errors
+
+### ⏭️ **Skippable Issues** (Continue Import)
+
+- Dead URLs (404, network errors, timeouts)
+- Unreachable servers
+
+### 📊 **Example Output**
 
 ```
-[ERROR] IMPORT STOPPED: Row 1247: GraphQL error: Invalid URL format
-[ERROR] Failed at row 1247:
-[ERROR]   Title: "Broken Article"
-[ERROR]   URL: "not-a-valid-url"
-[ERROR]   Tags: "tech|programming"
-[ERROR]   Status: "archive"
-[ERROR]
-Progress before failure: 1246/1246 articles imported successfully
+[INFO] Starting import process...
+[WARNING] Row 15: Skipping dead URL (HTTP 404): https://old-blog.example.com/post
+[WARNING] Row 23: Skipping dead URL (ENOTFOUND): https://defunct-site.invalid
+[ERROR] IMPORT STOPPED: Row 47: Invalid URL format
+
+Progress before failure: 45/46 articles imported successfully
+Final Statistics:
+  ✅ Total articles processed: 45/50
+  ⏭️  Articles skipped (dead URLs): 4
+  🏷️  Articles with tags: 38
+  📦 Articles archived: 22
 ```
+
+## Performance Considerations
+
+- **URL checking timeout**: 10 seconds per URL (configurable)
+- **Rate limiting**: 200ms delay between requests (configurable)
+- **Concurrent checking**: URLs are checked sequentially to avoid overwhelming
+  servers
+- **Progress tracking**: Real-time progress bar with current article being
+  processed
 
 ## Contributing
 
